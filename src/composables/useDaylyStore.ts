@@ -143,9 +143,8 @@ function deriveMonthOptions(dataset: DaylyData) {
   for (const key of Object.keys(dataset.days)) {
     months.add(monthKeyFromDayKey(key));
   }
+  // Always include the current month so a new month shows up even with no entries yet.
+  months.add(toMonthKey(new Date()));
   const sorted = Array.from(months).sort();
-  if (sorted.length === 0) {
-    return [toMonthKey(new Date())];
-  }
   return sorted;
 }

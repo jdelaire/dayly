@@ -60,11 +60,16 @@ function setCurrency(next: string) {
 }
 
 function updateDay(dayKey: string, cents: number | null) {
+  const nextDays = { ...data.value.days };
   if (cents === null) {
-    delete data.value.days[dayKey];
+    delete nextDays[dayKey];
   } else {
-    data.value.days[dayKey] = cents;
+    nextDays[dayKey] = cents;
   }
+  data.value = {
+    ...data.value,
+    days: nextDays,
+  };
   saveData();
 }
 

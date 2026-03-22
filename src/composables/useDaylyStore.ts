@@ -25,6 +25,7 @@ try {
 
 const monthStats = computed(() => computeMonthStats(data.value, selectedMonth.value));
 const soFarStats = computed(() => computeSoFarStats(data.value, selectedMonth.value));
+const averagePerMonthStats = computed(() => computeAveragePerMonthStats(data.value));
 const monthOptions = computed(() => deriveMonthOptions(data.value));
 
 watch(
@@ -126,6 +127,23 @@ function computeSoFarStats(dataset: DaylyData, monthKey: string) {
   };
 }
 
+function computeAveragePerMonthStats(dataset: DaylyData) {
+  const totalsByMonth = new Map<string, number>();
+
+  for (const [dayKey, cents] of Object.entries(dataset.days)) {
+    const monthKey = monthKeyFromDayKey(dayKey);
+    totalsByMonth.set(monthKey, (totalsByMonth.get(monthKey) ?? 0) + cents);
+  }
+
+  const monthsCount = totalsByMonth.size;
+  const totalCents = Array.from(totalsByMonth.values()).reduce((sum, value) => sum + value, 0);
+
+  return {
+    averageCents: monthsCount ? totalCents / monthsCount : 0,
+    monthsCount,
+  };
+}
+
 export function useDaylyStore() {
   return {
     data,
@@ -134,6 +152,7 @@ export function useDaylyStore() {
     currency,
     monthStats,
     soFarStats,
+    averagePerMonthStats,
     monthOptions,
     updateDay,
     replaceAll,

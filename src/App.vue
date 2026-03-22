@@ -51,6 +51,17 @@
           <strong>{{ formatCents(monthStats.averageCents, currency) }}</strong>
           <span class="muted">Total / {{ monthStats.daysInMonth }}</span>
         </div>
+        <div class="stat">
+          <p>Average / month</p>
+          <strong>{{ formatCents(averagePerMonthStats.averageCents, currency) }}</strong>
+          <span class="muted">
+            {{
+              averagePerMonthStats.monthsCount
+                ? `${averagePerMonthStats.monthsCount} recorded month${averagePerMonthStats.monthsCount === 1 ? "" : "s"}`
+                : "No recorded months yet"
+            }}
+          </span>
+        </div>
         <div v-if="soFarStats" class="stat">
           <p>So far total</p>
           <strong>{{ formatCents(soFarStats.totalCents, currency) }}</strong>
@@ -110,6 +121,7 @@ const {
   currency,
   monthStats,
   soFarStats,
+  averagePerMonthStats,
   monthOptions,
   updateDay,
   replaceAll,

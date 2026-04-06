@@ -57,8 +57,8 @@
           <span class="muted">
             {{
               averagePerMonthStats.monthsCount
-                ? `${averagePerMonthStats.monthsCount} recorded month${averagePerMonthStats.monthsCount === 1 ? "" : "s"}`
-                : "No recorded months yet"
+                ? `${averagePerMonthStats.monthsCount} completed recorded month${averagePerMonthStats.monthsCount === 1 ? "" : "s"}`
+                : "No completed months yet"
             }}
           </span>
         </div>

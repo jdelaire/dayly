@@ -129,9 +129,11 @@ function computeSoFarStats(dataset: DaylyData, monthKey: string) {
 
 function computeAveragePerMonthStats(dataset: DaylyData) {
   const totalsByMonth = new Map<string, number>();
+  const currentMonthKey = toMonthKey(new Date());
 
   for (const [dayKey, cents] of Object.entries(dataset.days)) {
     const monthKey = monthKeyFromDayKey(dayKey);
+    if (monthKey === currentMonthKey) continue;
     totalsByMonth.set(monthKey, (totalsByMonth.get(monthKey) ?? 0) + cents);
   }
 
